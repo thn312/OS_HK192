@@ -1,0 +1,22 @@
+Trả lời câu hỏi phần 6.1 QUESTIONS}
+
+1. What the output will be at LINE A?
+ Trả lời:
+
+- Khi thực thi đoạn chương trình, lệnh pid = fork() được thực thi sẽ phân thân thành 2 tiến trình, 
+trong câu lệnh else if (pid > 0) có lệnh wait(NULL), tức là đợi quá trình con thực thi xong thì 
+tiến trình ở điều kiện pid > 0 mới được thực thi. Do đó, nếu ta thực hiện lệnh in giá trị value ở 
+tiến trình con, kết quả chương trình trên sẽ là "CHILD: Value = 20; PARENT: Value = 5", 
+nhưng do ở đây chương trình không thực hiện lệnh in ở điều kiện tiến trình con 
+nên kết quả thu được sẽ là: "PARENT: Value = 5".
+
+
+2. When a process creates a new process using the fork() operation, which of the
+following states is shared between the parent process and the child process?
+ Trả lời:
+
+- Khi tiến trình được tạo ra nhờ lệnh fork(), thì chỉ có các phân đoạn bộ nhớ được chia sẻ 
+(shared memory segments) giữa tiến trình cha (parent process) và tiến trình con (child process). 
+Còn stacks và heaps sẽ không được chia sẻ giữa các tiến trình. 
+Thay vào đó, các bản sao mới của stacks và heaps được tạo ra cho tiến trình mới này. 
+Do đó, đáp án sẽ là C. Shared memory segments.
