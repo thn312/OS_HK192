@@ -1,0 +1,32 @@
+Q1. What resources are used when a thread is created? How do they differ from those
+used when a process is created?
+
+     Answer:
+- Thread là một đơn vị cơ bản của việc sử dụng CPU, hay còn được gọi là một quá trình
+với dung lượng nhẹ. Khi một thread được tạo ra sẽ không yêu cầu bất kỳ một tài nguyên 
+mới nào để thực thi thread, mà các thread này sẽ có thể chia sẻ với nhau về bộ nhớ trong 
+một process tạo ra chúng (code, data, files). Một thread có: 
+    + registers
+    + stack
+- Do 1 thread thì nhỏ hơn 1 process, do đó việc tạo thread sử dụng ít tài nguyên hơn so 
+với việc tạo process. Khi tạo một process thì yêu cầu phải cấp phát một process control 
+clock (PCB), PCB thì chứa memory map, danh sách open files, và các biến. Việc tạo và kiểm 
+sóat memory map thì rất tốn thời gian. Còn việc taoh các thread thì chỉ cần cấp phát một 
+cấu trúc dữ liệu nhỏ để có thể lưu: register, stack,...
+
+Q2. Is it possible to have concurrency but not parallelism? Explain
+     
+     Answer:
+- Có thể tạo đồng thời, nhưng không song song.
+Vì: 
++ Đồng thời: có nghĩa là khi hai tác vụ hoặc luồng khác nhau bắt đầu hoạt động cùng nhau 
+trong một khoảng thời gian chồng chéo. Tuy nhiên, điều đó không có nghĩa là chúng chạy 
+cùng một lúc.
++ Song song: là nơi mà hai hoặc nhiều nhiệm vụ khác nhau bắt đầu thực hiện cùng một lúc. 
+Nó có nghĩa là hai nhiệm vụ hoặc hai chủ đề bắt đầu làm việc cùng một lúc.
+
+Ví dụ: ta có 2 quá trình A và B. Mỗi quá trình lại có 4 công việc khác nhau gọi là P1, P2, P3,
+P4, ta thực thi chúng bằng cách: đầu tiên thực thi P1 của A, rồi đến P1 của B.
+Sau đó, là P2 của A, rồi đến P2 của B cứ tiếp tục như thế cho đến hết công việc.
+Qua đây, ta thấy được rằng cả hai quá trình này được thực hiện đồng thời nhưng mỗi hoạt động lại 
+độc lập, không hề song song với nhau.

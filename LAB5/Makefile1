@@ -1,0 +1,8 @@
+all: pi_serial pi_multi-thread
+pi_serial: pi_serial.c
+	gcc -pthread -o pi_serial pi_serial.c
+pi_multi-thread: pi_multi-thread.c
+	gcc -pthread -o pi_multi-thread pi_multi-thread.c
+clean:
+	rm all
+	
