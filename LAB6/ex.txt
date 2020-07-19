@@ -1,0 +1,39 @@
+Problem 1: Assume that a husband and wife share a bank account and that concurrently the husband calls
+the withdraw() method and the wife calls deposit().
+
+    Answer:
+
+- Giả sử ban đầu money = 1 000 000 VNĐ. Hàm withdraw() thực hiện rút 500 000 VNĐ, hàm deposit()
+thực hiện gửi vào số tiền 300 000 VNĐ. Do 2 vợ chồng chia sẻ một tài khoản ngân hàng, khi người
+chồng gọi hàm withdraw() và người vợ gọi hàm deposit() có thể xảy ra kết quả sau:
+    + Lệnh giảm biến chung - money của hàm withdraw() được thực thi TRƯỚC lệnh tăng biến money 
+của hàm deposit(). Dẫn đến kết quả:
+        . withdraw(): money = 1 000 000 - 500 000 = 500 000 VNĐ.
+        . deposit(): money = 500 000 + 300 000 = 800 000 VNĐ.
+    + Lệnh giảm biến chung - money của hàm withdraw() được thực thi SAU lệnh tăng biến money 
+của hàm deposit(). Dẫn đến kết quả:
+        . deposit(): money = 1 000 000 + 300 000 = 1 300 000 VNĐ.
+        . withdraw(): money = 1 300 000 - 300 000 = 800 000 VNĐ.
+    + Lệnh giảm biến chung - money của hàm withdraw() được thực thi XEN KẼ lệnh tăng biến money 
+của hàm deposit(). Dẫn đến kết quả:
+        . withdraw(): money = 1 000 000 - 500 000 = 500 000 VNĐ.
+        . deposit(): money = 1 000 000 + 300 000 = 1 300 000 VNĐ, do giá trị cân bằng chia sẻ (money) chưa 
+        được lưu và cập nhật kịp trước khi hành động deposit() dùng đến nó.
+--> Với 3 trường hợp trên, kết quả kết thúc quá trình của trường hợp thứ 3 bị sai.    
+
+- Để khắc phục được vấn đề này, ngân hàng có thể sử dùng khóa mutex nhằm khóa số
+dư tài khoản cân bằng khi một tài khoản cố gắng thay đổi nó. Khóa mutex sẽ khóa tất cả
+các vùng quan trọng (critical section) khác đang cố gắng thay đổi giá trị cân bằng và 
+chỉ mở khóa khi process kết thúc.
+
+Problem 2: 
+    Answer:
+
+- Việc thực thi chương trình với kỹ thuật giải quyết tranh chấp mutex sẽ tốn thời gian hơn
+so với việc không dùng đến kỹ thuật này trong một chương trình tương đương. 
+Vì với kỹ thuật mutex, để bảo vệ đồng bộ tài nguyên chia sẻ một thread phải trãi qua cả 3 bước sau:
+    + Khóa mutex trước khi vào critical section.
+    + Thực thi code trong critical section.
+    + Mở khóa mutex sau khi kết thúc critical section.
+- Dù có thể tốn thời gian hơn, nhưng với kỹ thuật mutex sẽ giải quyết được các vấn đề việc tranh
+chấp vùng dữ liệu dùng chung, các biến chia sẻ dữ liệu dùng chung.
