@@ -1,0 +1,18 @@
+PROBLEM 2
+    1. In which cases we should use aligned_malloc() instead of standard malloc?
+- Trong hệ điều hành Linux, khi sử dụng hàm malloc sẽ tạo vùng nhớ có địa chỉ đầu
+tiên là bội số của 8 đối với hệ điều hành 32 bit; và là bội số 16 với hệ điều hành
+64 bit. Do đó nếu sử dụng khối địa chỉ có bội số lớn của lũy thừa cao hơn, việc 
+sử dụng hàm aligned_malloc() sẽ giúp cho ta căn chỉnh khối bộ nhớ phù hợp hơn,
+ngoài ra cũng giúp phần tối ưu hóa tốc độ đọc ghi.
+
+    2. How can we increase the size of heap in a running process?
+- Heap gồm có 3 mốc: start point, maximum limit, break. Vùng nhớ từ start point
+đến break là vùng nhớ dùng khi chạy các process. Chúng ta có thể tăng vùng nhớ này lên
+bằng cách sử dụng 2 system calls là: brk() và sbrk().
+    + System calls brk(): đặt phần cuối của phân đoạn dữ liệu thành giá trị được chỉ định
+bởi addr, khi giá trị đó hợp lý, hệ thống có đủ bộ nhớ và quá trình không vượt quá kích 
+thước dữ liệu tối đa của nó: int brk(void *addr);
+    + System calls sbrk(): từ vị trí break hiện tại (bằng cách gọi sbrk(0)), chúng ta sẽ 
+tăng break lên bằng số bytes được truyền vào (increment): void *sbrk(intptr_t increment);
+
